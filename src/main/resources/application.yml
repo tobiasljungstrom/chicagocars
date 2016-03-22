@@ -1,14 +1,14 @@
 spring:
   application:
-    name: school
+    name: chicagocars
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.MySQLInnoDBDialect
       naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
-      ddl-auto: drop-create
+      ddl-auto: create-drop
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/chicagocars?useSSL=false
+    url: jdbc:mysql://localhost/chicagocars
     username: tobias
     password: password
   jackson:
