@@ -35,7 +35,7 @@ public class CustomerController {
         customerService.saveCustomer(customer);
     }
 
-    @RequestMapping(value = "/customers/{id}")
+    @RequestMapping(value = "/customers/{id}", method = RequestMethod.DELETE)
     public void deleteCustomer(Long id) {
         customerService.deleteCustomer(id);
     }

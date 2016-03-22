@@ -22,10 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="com.chicagocars" />
         <module name="com.interstellarmechanics" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="com.chicagocars" target="1.6" />
       <module name="com.interstellarmechanics" target="1.6" />
     </bytecodeTargetLevel>
   </component>

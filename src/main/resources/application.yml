@@ -8,7 +8,7 @@ spring:
       ddl-auto: create-drop
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost/chicagocars
+    url: jdbc:mysql://localhost/chicagocars?useSSL=false
     username: tobias
     password: password
   jackson:
