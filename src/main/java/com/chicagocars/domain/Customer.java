@@ -2,12 +2,14 @@ package com.chicagocars.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "customers")
-public class Customer implements Serializable{
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,6 +22,13 @@ public class Customer implements Serializable{
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email")
+    private String email;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     @OneToMany(mappedBy = "owner")
     private Set<Car> cars;
 
@@ -29,11 +38,11 @@ public class Customer implements Serializable{
     public Customer() {
     }
 
-    public Customer(String firstName, String lastName, Set<Car> cars, Set<Appointment> appointments) {
+    public Customer(String firstName, String lastName, String email, Address address) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.cars = cars;
-        this.appointments = appointments;
+        this.email = email;
+        this.address = address;
     }
 
     public Long getId() {
@@ -60,8 +69,16 @@ public class Customer implements Serializable{
         this.lastName = lastName;
     }
 
-    public Set<Car> getCars() {
-        return cars;
+    public List<String> getCars() {
+
+        List<String> carNames = new ArrayList<String>();
+
+        for (Car car : cars
+                ) {
+            carNames.add(car.toString());
+        }
+
+        return carNames;
     }
 
     public void setCars(Set<Car> cars) {
@@ -74,5 +91,21 @@ public class Customer implements Serializable{
 
     public void setAppointments(Set<Appointment> appointments) {
         this.appointments = appointments;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address.toString();
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

@@ -75,4 +75,9 @@ public class Car implements Serializable{
     public void setOwner(Customer owner) {
         this.owner = owner;
     }
+
+    @Override
+    public String toString() {
+        return manufacturer + " " + model + " (" + licenseNumber + ")";
+    }
 }
