@@ -3,11 +3,14 @@ var customerURL = "http://localhost:8080/api/customers/";
 var carURL = "http://localhost:8080/api/cars/";
 var appointmentURL = "http://localhost:8080/api/appointments/";
 
+var statusCodeOK = 1;
+
 $('document').ready(function() {
 
     //Page preparation
     clearAllActivePages();
     activateCustomerPage();
+    $('.alert').hide();
 
     //Forms
     $('#newCustomerForm').on("submit", function(e) {
@@ -37,11 +40,30 @@ $('document').ready(function() {
 function submitData(body, url) {
 console.log("Submitting data: " + body);
 
+    var returnStatus = "no status";
+
     $.ajax(url, {
         type: "POST",
         contentType: "application/json",
-        data: body
+        data: body,
+        success: function() {
+            showAlert(statusCodeOK);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            showAlert("Error! Code: " + jqXHR.status);
+        }
     });
+
+    return returnStatus;
+}
+
+function showAlert(status) {
+    if (status === statusCodeOK){
+        $('.modal-footer .alert').html("Success!").addClass('alert-success').fadeIn();
+    } else {
+        $('.modal-footer .alert').html(status).addClass('alert-danger').fadeIn();
+    }
+
 }
 
 function activateCustomerPage() {
