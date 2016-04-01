@@ -1,5 +1,7 @@
 package com.chicagocars.domain;
 
+import com.chicagocars.services.CustomerService;
+
 import javax.persistence.*;
 import java.io.Serializable;
 

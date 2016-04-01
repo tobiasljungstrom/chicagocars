@@ -5,15 +5,16 @@ var appointmentURL = "http://localhost:8080/api/appointments/";
 
 var statusCodeOK = 1;
 
-$('document').ready(function() {
+$('document').ready(function () {
 
     //Page preparation
     clearAllActivePages();
+    hideAllAlerts();
+    populateCustomerLists();
     activateCustomerPage();
-    $('.alert').hide();
 
     //Forms
-    $('#newCustomerForm').on("submit", function(e) {
+    $('#newCustomerForm').on("submit", function (e) {
         e.preventDefault();
 
         var formData = $(this).serializeObject();
@@ -29,39 +30,97 @@ $('document').ready(function() {
             "lastName": formData.lastName,
             "email": formData.email,
             "address": address
-        }
+        };
 
         body = JSON.stringify(body);
 
         submitData(body, customerURL);
     });
+
+    $('#newCarForm').on("submit", function (e) {
+        e.preventDefault();
+
+        var formData = $(this).serializeObject();
+
+        var allCustomers = getData(customerURL + "all");
+
+        console.log(formData.carOwner);
+        console.log(allCustomers[0].id);
+
+        var body = {
+            "licenseNumber": formData.licenseNumber,
+            "manufacturer": formData.manufacturer,
+            "model": formData.model,
+            "owner": formData.carOwner
+        };
+
+        body = JSON.stringify(body);
+
+        submitData(body, carURL);
+        console.log(body);
+    });
+
+    $('#newAppointmentForm').on("submit", function(e) {
+
+        //TODO
+
+    });
 });
 
-function submitData(body, url) {
-console.log("Submitting data: " + body);
+function populateCustomerLists() {
+    var allCustomers = getData(customerURL + "all");
 
-    var returnStatus = "no status";
+    for (i = 0; i < allCustomers.length; i++) {
+        var currentId = allCustomers[i].id;
+        var currentName = allCustomers[i].firstName + " " + allCustomers[i].lastName;
+
+        $('#carOwnerSelector').append("<option value='" + currentId + "'>[" + currentId + "] " + currentName + "</option>");
+        $('#appointmentOwnerSelector').append("<option value='" + currentId + "'>[" + currentId + "] " + currentName + "</option>");
+    }
+}
+
+function submitData(body, url) {
+    console.log("Submitting data: " + body);
 
     $.ajax(url, {
         type: "POST",
         contentType: "application/json",
         data: body,
-        success: function() {
+        success: function () {
             showAlert(statusCodeOK);
         },
-        error: function(jqXHR, textStatus, errorThrown) {
-            showAlert("Error! Code: " + jqXHR.status);
+        error: function (jqXHR, textStatus, errorThrown) {
+            showAlert(jqXHR.status);
+        }
+    });
+}
+
+function getData(url) {
+    console.log("Retrieving data...");
+
+    var returnData;
+
+    $.ajax(url, {
+        type: "GET",
+        dataType: "json",
+        async: false,
+        success: function (data, textStatus, jqXHR) {
+            console.log("GET Success");
+            returnData = data;
+        },
+        complete: function(jqXHR, textStatus) {
+            console.log("GET Complete");
         }
     });
 
-    return returnStatus;
+    return returnData;
 }
 
-function showAlert(status) {
-    if (status === statusCodeOK){
+function showAlert(statusCode) {
+    if (statusCode === statusCodeOK) {
         $('.modal-footer .alert').html("Success!").addClass('alert-success').fadeIn();
     } else {
-        $('.modal-footer .alert').html(status).addClass('alert-danger').fadeIn();
+        $('.modal-footer .alert').html("Error! Code: " + statusCode).addClass('alert-danger').fadeIn();
     }
 
 }
@@ -70,6 +129,7 @@ function activateCustomerPage() {
     console.log("Activating customers page");
 
     clearAllActivePages();
+    hideAllAlerts();
     $('#customersPanel').show();
     $('#navButtonCustomers').addClass('active');
 }
@@ -78,6 +138,7 @@ function activateCarsPage() {
     console.log("Activating cars page");
 
     clearAllActivePages();
+    hideAllAlerts();
     $('#carsPanel').show();
     $('#navButtonCars').addClass('active');
 }
@@ -86,8 +147,13 @@ function activateAppointmentsPage() {
     console.log("Activating appointments page");
 
     clearAllActivePages();
+    hideAllAlerts();
     $('#appointmentsPanel').show();
     $('#navButtonAppointments').addClass('active');
+}
+
+function hideAllAlerts() {
+    $('.alert').hide();
 }
 
 function clearAllActivePages() {
@@ -96,10 +162,10 @@ function clearAllActivePages() {
 }
 
 //Function to create a JSON object out of a form
-$.fn.serializeObject = function() {
+$.fn.serializeObject = function () {
     var o = {};
     var a = this.serializeArray();
-    $.each(a, function() {
+    $.each(a, function () {
         if (o[this.name] !== undefined) {
             if (!o[this.name].push) {
                 o[this.name] = [o[this.name]];

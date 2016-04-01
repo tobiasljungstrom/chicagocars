@@ -111,7 +111,29 @@
                         </div>
                         <div class="modal-body">
 
+                            <!-- Input Form -->
+                            <form role="form" id="newCarForm">
+                                <div class="form-group">
+                                    <input type="text" name="licenseNumber" placeholder="License Number">
 
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="manufacturer" placeholder="Manufacturer">
+
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="model" placeholder="Model">
+
+                                </div>
+                                <div class="form-group">
+                                    <select name="carOwner" title="Owner" id="carOwnerSelector">
+                                        <option title="Please Select Owner" selected disabled>Please Select Owner</option>
+                                        <option disabled></option>
+                                    </select>
+
+                                </div>
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
 
                         </div>
                         <div class="modal-footer">
@@ -125,7 +147,7 @@
 
         <div class="well contentPanel" id="appointmentsPanel">
             Appointment
-            <button type="button" class="btn btn-default" id="#newAppointmentButton" data-toggle="modal" data-target="#newAppointmentModal">Add New Customer</button>
+            <button type="button" class="btn btn-default" id="#newAppointmentButton" data-toggle="modal" data-target="#newAppointmentModal">Add New Appointment</button>
 
             <!-- New Appointment Modal -->
             <div class="modal fade" id="newAppointmentModal" role="dialog">
@@ -136,7 +158,41 @@
                             <h4 class="modal-title">Add New Appointment</h4>
                         </div>
                         <div class="modal-body">
-                            FORM
+
+                            <!-- Input Form -->
+                            <form role="form" id="newAppointmentForm">
+                                <div class="form-group">
+                                    <input type="date" name="date" placeholder="YYYY-MM-DD">
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="time">
+                                        <option value="08:00">08:00</option>
+                                        <option value="09:00">09:00</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="13:00">13:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <select name="appointmentOwner" title="Owner" id="appointmentOwnerSelector">
+                                        <option title="Please Select Customer" selected disabled>Please Select Customer</option>
+                                        <option disabled></option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea name="notes" rows="5" cols="70"></textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </form>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
