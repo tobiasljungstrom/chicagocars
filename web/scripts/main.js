@@ -62,7 +62,7 @@ $('document').ready(function () {
         var formData = $(this).serializeObject();
 
         var body = {
-            "date":formData.date + "T" + formData.time + ":00.000" + TIMEZONE,
+            "date": formData.date + "T" + formData.time + ":00.000" + TIMEZONE,
             "customer": {"id": formData.appointmentOwner},
             "notes": formData.notes
         };
@@ -132,13 +132,50 @@ function showAlert(statusCode) {
 
 }
 
+function populateCustomerTable() {
+    var allCustomers = getData(customerURL + "all");
+    var tableBody = $("#customerDisplayTable").find("tbody");
+
+    tableBody.html(""); //Clear the table to prevent duplicate entries
+
+    for (i = 0; i < allCustomers.length; i++) {
+        tableBody.append(
+            "<tr>" +
+            "<td>" + allCustomers[i].id + "</td>" +
+            "<td>" + allCustomers[i].firstName + " " + allCustomers[i].lastName + "</td>" +
+            "<td>" + allCustomers[i].email + "</td>" +
+            "<td>" + allCustomers[i].address + "</td>" +
+            "</tr>"
+        )
+    }
+}
+
 function activateCustomerPage() {
     console.log("Activating customers page");
 
     clearAllActivePages();
     hideAllAlerts();
+    populateCustomerTable();
     $('#customersPanel').show();
     $('#navButtonCustomers').addClass('active');
+}
+
+function populateCarsTable() {
+    var allCars = getData(carURL + "all");
+    var tableBody = $("#carsDisplayTable").find("tbody");
+
+    tableBody.html(""); //Clear the table to prevent duplicate entries
+
+    for (i = 0; i < allCars.length; i++) {
+        tableBody.append(
+            "<tr>" +
+            "<td>" + allCars[i].licenseNumber + "</td>" +
+            "<td>" + allCars[i].manufacturer + "</td>" +
+            "<td>" + allCars[i].model + "</td>" +
+            "<td>" + "[" + allCars[i].owner.id + "] " + allCars[i].owner.firstName + " " + allCars[i].owner.lastName + "</td>" +
+            "</tr>"
+        )
+    }
 }
 
 function activateCarsPage() {
@@ -146,8 +183,34 @@ function activateCarsPage() {
 
     clearAllActivePages();
     hideAllAlerts();
+    populateCarsTable();
     $('#carsPanel').show();
     $('#navButtonCars').addClass('active');
+}
+
+function limitText(text, limit) {
+    if (text.length > limit) {
+        text = text.substr(0, limit);
+        text = text + "...";
+    }
+    return text;
+}
+
+function populateAppointmentsTable() {
+    var allAppointments = getData(appointmentURL + "all");
+    var tableBody = $("#appointmentsDisplayTable").find("tbody");
+
+    tableBody.html(""); //Clear the table to prevent duplicate entries
+
+    for (i = 0; i < allAppointments.length; i++) {
+        tableBody.append(
+            "<tr>" +
+            "<td>" + allAppointments[i].date + "</td>" +
+            "<td>" + "[" + allAppointments[i].customer.id + "] " + allAppointments[i].customer.firstName + " " + allAppointments[i].customer.lastName + "</td>" +
+            "<td>" + limitText(allAppointments[i].notes, 80) + "</td>" +
+            "</tr>"
+        )
+    }
 }
 
 function activateAppointmentsPage() {
@@ -155,6 +218,7 @@ function activateAppointmentsPage() {
 
     clearAllActivePages();
     hideAllAlerts();
+    populateAppointmentsTable();
     $('#appointmentsPanel').show();
     $('#navButtonAppointments').addClass('active');
 }

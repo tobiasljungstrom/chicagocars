@@ -1,9 +1,20 @@
 $primaryColor: #3e84ad;
+$headerTextSize: 3em;
 
 body {
-    background-color: $primaryColor;
+  background-color: $primaryColor;
 }
 
-.mainContainer{
-    margin-top: 50px;
+.mainContainer {
+  margin-top: 50px;
+}
+
+.panelHeader {
+  text-align: center;
+  font-size: $headerTextSize;
+}
+
+.headerButtonContainer {
+  text-align: right;
+  margin-bottom: 10px;
 }

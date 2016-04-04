@@ -41,8 +41,8 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return date.toString().substring(0, 16);
     }
 
     public void setDate(Date date) {

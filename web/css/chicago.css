@@ -4,4 +4,12 @@ body {
 .mainContainer {
   margin-top: 50px; }
 
+.panelHeader {
+  text-align: center;
+  font-size: 3em; }
+
+.headerButtonContainer {
+  text-align: right;
+  margin-bottom: 10px; }
+
 /*# sourceMappingURL=chicago.css.map */

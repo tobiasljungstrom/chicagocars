@@ -23,186 +23,257 @@
 </head>
 
 <body>
-    <div class="container mainContainer">
+<div class="container mainContainer">
 
-        <!-- Navbar -->
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Chicago Cars</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li id="navButtonCustomers"><a onclick="activateCustomerPage()" href="#">Customers</a></li>
-                    <li id="navButtonCars"><a onclick="activateCarsPage()" href="#">Cars</a></li>
-                    <li id="navButtonAppointments"><a onclick="activateAppointmentsPage()" href="#">Appointments</a></li>
-                </ul>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Chicago Cars</a>
             </div>
-        </nav>
+            <ul class="nav navbar-nav">
+                <li id="navButtonCustomers"><a onclick="activateCustomerPage()" href="#">Customers</a></li>
+                <li id="navButtonCars"><a onclick="activateCarsPage()" href="#">Cars</a></li>
+                <li id="navButtonAppointments"><a onclick="activateAppointmentsPage()" href="#">Appointments</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <!-- Pages -->
-        <div class="well contentPanel" id="customersPanel">
-            Customers
-            <button type="button" class="btn btn-default" id="#newCustomerButton" data-toggle="modal" data-target="#newCustomerModal">Add New Customer</button>
+    <!-- Pages -->
 
-            <!-- New Customer Modal -->
-            <div class="modal fade" id="newCustomerModal" role="dialog">
-                <div class="modal-dialog">
+    <!-- CUSTOMERS -->
+    <div class="well contentPanel" id="customersPanel">
+        <div class="panelHeader">Customers</div>
+        <div class="headerButtonContainer">
+            <button type="button" class="btn btn-default btn-success" id="#newCustomerButton" data-toggle="modal"
+                    data-target="#newCustomerModal">Add New Customer
+            </button>
+        </div>
 
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add New Customer</h4>
-                        </div>
-                        <div class="modal-body">
+        <!-- New Customer Modal -->
+        <div class="modal fade" id="newCustomerModal" role="dialog">
+            <div class="modal-dialog">
 
-                            <!-- Input Form -->
-                            <form role="form" id="newCustomerForm">
-                                <div class="form-group">
-                                    <input type="text" name="firstName" placeholder="First Name">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New Customer</h4>
+                    </div>
+                    <div class="modal-body">
 
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="lastName" placeholder="Last Name">
+                        <!-- Input Form -->
+                        <form role="form" id="newCustomerForm">
+                            <div class="form-group">
+                                <input type="text" name="firstName" placeholder="First Name">
 
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="email" placeholder="E-mail">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="street" placeholder="Street">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="postcode" placeholder="Postcode">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="city" placeholder="City">
-
-                                </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
-                            </form>
-
-                        </div>
-                        <div class="modal-footer">
-                            <div class="alert" id="customerAlert">
-                                Alert
                             </div>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+                            <div class="form-group">
+                                <input type="text" name="lastName" placeholder="Last Name">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="E-mail">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="street" placeholder="Street">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="postcode" placeholder="Postcode">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="city" placeholder="City">
+
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+
                     </div>
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="well contentPanel" id="carsPanel">
-            Cars
-            <button type="button" class="btn btn-default" id="#newCarButton" data-toggle="modal" data-target="#newCarModal">Add New Car</button>
-
-            <!-- New Car Modal -->
-            <div class="modal fade" id="newCarModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add New Car</h4>
+                    <div class="modal-footer">
+                        <div class="alert" id="customerAlert">
+                            Alert
                         </div>
-                        <div class="modal-body">
-
-                            <!-- Input Form -->
-                            <form role="form" id="newCarForm">
-                                <div class="form-group">
-                                    <input type="text" name="licenseNumber" placeholder="License Number">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="manufacturer" placeholder="Manufacturer">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" name="model" placeholder="Model">
-
-                                </div>
-                                <div class="form-group">
-                                    <select name="carOwner" title="Owner" id="carOwnerSelector">
-                                        <option title="Please Select Owner" selected disabled>Please Select Owner</option>
-                                        <option disabled></option>
-                                    </select>
-
-                                </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
-                            </form>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
-
                 </div>
+
             </div>
         </div>
 
-        <div class="well contentPanel" id="appointmentsPanel">
-            Appointment
-            <button type="button" class="btn btn-default" id="#newAppointmentButton" data-toggle="modal" data-target="#newAppointmentModal">Add New Appointment</button>
+        <!-- Customer table -->
+        <div class="well">
+            <table class="table table-striped" id="customerDisplayTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Address</th>
+                </tr>
+                </thead>
+                <tbody>
 
-            <!-- New Appointment Modal -->
-            <div class="modal fade" id="newAppointmentModal" role="dialog">
-                <div class="modal-dialog">
-
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add New Appointment</h4>
-                        </div>
-                        <div class="modal-body">
-
-                            <!-- Input Form -->
-                            <form role="form" id="newAppointmentForm">
-                                <div class="form-group">
-                                    <input type="date" name="date" placeholder="Date (YYYY-MM-DD)">
-                                </div>
-
-                                <div class="form-group">
-                                    <select name="time">
-                                        <option value="08:00">08:00</option>
-                                        <option value="09:00">09:00</option>
-                                        <option value="10:00">10:00</option>
-                                        <option value="11:00">11:00</option>
-                                        <option value="13:00">13:00</option>
-                                        <option value="14:00">14:00</option>
-                                        <option value="15:00">15:00</option>
-                                        <option value="16:00">16:00</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <select name="appointmentOwner" title="Owner" id="appointmentOwnerSelector">
-                                        <option title="Please Select Customer" selected disabled>Please Select Customer</option>
-                                        <option disabled></option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <textarea name="notes" rows="5" cols="70"></textarea>
-                                </div>
-
-                                <button type="submit" class="btn btn-default">Submit</button>
-                            </form>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+                </tbody>
+            </table>
         </div>
 
     </div>
+
+
+    <!-- CARS -->
+    <div class="well contentPanel" id="carsPanel">
+        <div class="panelHeader">Cars</div>
+        <div class="headerButtonContainer">
+            <button type="button" class="btn btn-default btn-success" id="#newCarButton" data-toggle="modal"
+                    data-target="#newCarModal">
+                Add New Car
+            </button>
+        </div>
+
+        <!-- New Car Modal -->
+        <div class="modal fade" id="newCarModal" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New Car</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Input Form -->
+                        <form role="form" id="newCarForm">
+                            <div class="form-group">
+                                <input type="text" name="licenseNumber" placeholder="License Number">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="manufacturer" placeholder="Manufacturer">
+
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="model" placeholder="Model">
+
+                            </div>
+                            <div class="form-group">
+                                <select name="carOwner" title="Owner" id="carOwnerSelector">
+                                    <option title="Please Select Owner" selected disabled>Please Select Owner</option>
+                                    <option disabled></option>
+                                </select>
+
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Cars table -->
+        <div class="well">
+            <table class="table table-striped" id="carsDisplayTable">
+                <thead>
+                <tr>
+                    <th>License Number</th>
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Owner</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+    <!-- APPOINTENTS -->
+    <div class="well contentPanel" id="appointmentsPanel">
+        <div class="panelHeader">Appointments</div>
+        <div class="headerButtonContainer">
+            <button type="button" class="btn btn-default btn-success" id="#newAppointmentButton" data-toggle="modal"
+                    data-target="#newAppointmentModal">Add New Appointment
+            </button>
+        </div>
+
+        <!-- New Appointment Modal -->
+        <div class="modal fade" id="newAppointmentModal" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add New Appointment</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Input Form -->
+                        <form role="form" id="newAppointmentForm">
+                            <div class="form-group">
+                                <input type="date" name="date" placeholder="Date (YYYY-MM-DD)">
+                            </div>
+
+                            <div class="form-group">
+                                <select name="time">
+                                    <option value="08:00">08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <select name="appointmentOwner" title="Owner" id="appointmentOwnerSelector">
+                                    <option title="Please Select Customer" selected disabled>Please Select Customer
+                                    </option>
+                                    <option disabled></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea name="notes" rows="5" cols="70"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Appointments table -->
+        <div class="well">
+            <table class="table table-striped" id="appointmentsDisplayTable">
+                <thead>
+                <tr>
+                    <th>Date and Time</th>
+                    <th>Customer</th>
+                    <th>Notes</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
 </body>
 
 </html>
