@@ -7,14 +7,14 @@ import java.util.Date;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "appointments")
-public class Appointment implements Serializable{
+public class Appointment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "date", columnDefinition = "DATETIME")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     @ManyToOne
@@ -63,5 +63,17 @@ public class Appointment implements Serializable{
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    @Override
+    public String toString() {
+        return date.toString()
+                + " - "
+                + customer.getFirstName()
+                + " "
+                + customer.getLastName()
+                + "("
+                + customer.getId()
+                + ")";
     }
 }

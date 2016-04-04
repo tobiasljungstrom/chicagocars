@@ -85,8 +85,15 @@ public class Customer implements Serializable {
         this.cars = cars;
     }
 
-    public Set<Appointment> getAppointments() {
-        return appointments;
+    public List<String> getAppointments() {
+        List<String> appointmentNames = new ArrayList<String>();
+
+        for (Appointment appointment : appointments
+                ) {
+            appointmentNames.add(appointment.toString());
+        }
+
+        return appointmentNames;
     }
 
     public void setAppointments(Set<Appointment> appointments) {

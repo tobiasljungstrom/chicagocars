@@ -2,6 +2,7 @@
 var customerURL = "http://localhost:8080/api/customers/";
 var carURL = "http://localhost:8080/api/cars/";
 var appointmentURL = "http://localhost:8080/api/appointments/";
+var TIMEZONE = "+0200";
 
 var statusCodeOK = 1;
 
@@ -42,27 +43,33 @@ $('document').ready(function () {
 
         var formData = $(this).serializeObject();
 
-        var allCustomers = getData(customerURL + "all");
-
-        console.log(formData.carOwner);
-        console.log(allCustomers[0].id);
-
         var body = {
             "licenseNumber": formData.licenseNumber,
             "manufacturer": formData.manufacturer,
             "model": formData.model,
-            "owner": formData.carOwner
+            "owner": {"id": formData.carOwner}
         };
 
         body = JSON.stringify(body);
 
         submitData(body, carURL);
-        console.log(body);
     });
 
-    $('#newAppointmentForm').on("submit", function(e) {
+    $('#newAppointmentForm').on("submit", function (e) {
 
-        //TODO
+        e.preventDefault();
+
+        var formData = $(this).serializeObject();
+
+        var body = {
+            "date":formData.date + "T" + formData.time + ":00.000" + TIMEZONE,
+            "customer": {"id": formData.appointmentOwner},
+            "notes": formData.notes
+        };
+
+        body = JSON.stringify(body);
+
+        submitData(body, appointmentURL);
 
     });
 });
@@ -108,7 +115,7 @@ function getData(url) {
             console.log("GET Success");
             returnData = data;
         },
-        complete: function(jqXHR, textStatus) {
+        complete: function (jqXHR, textStatus) {
             console.log("GET Complete");
         }
     });
