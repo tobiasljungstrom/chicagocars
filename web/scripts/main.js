@@ -103,11 +103,16 @@ function buildCustomerInspectionModal(modal, customer) {
     }
 
     modal.find(".modal-body").html(
-        "<div>" + customer.firstName + " " + customer.lastName + "</div>" +
-        "<div>Customer id: " + customer.id + "</div>" +
-        "<div>" + customer.address + "</div>" +
+        "<div><h2>" + customer.firstName + " " + customer.lastName + "</h2></div>" +
+        "<div><h4>Customer id: " + customer.id + "</h4></div>" +
+        "<div><h3>" + customer.address + "</h3></div>" +
+        "<div class='well'>" +
+        "<div><h4>Cars</h4></div>" +
         "<div>" + carListStrings + "</div>" +
-        "<div>" + appointmentListStrings + "</div>"
+        "</div><div class='well'>" +
+        "<div><h4>Appointments</h4></div>" +
+        "<div>" + appointmentListStrings + "</div>" +
+        "</div>"
     );
 }
 
@@ -115,9 +120,9 @@ function buildCarInspectionModal(modal, car) {
     modal.find(".modal-title").html("Car");
 
     modal.find(".modal-body").html(
-        "<div>" + car.manufacturer + " " + car.model + "</div>" +
-        "<div>License Number: " + car.licenseNumber + "</div>" +
-        "<div>Owner: " + car.owner.firstName + " " + car.owner.lastName + "</div>"
+        "<div><h2>" + car.manufacturer + " " + car.model + "</h2></div>" +
+        "<div><h3>License Number: " + car.licenseNumber + "</h3></div>" +
+        "<div onclick='showInspectionModal(\"customer\"," + car.owner.id + ")'><h4>Owner: " + car.owner.firstName + " " + car.owner.lastName + "</h4></div>"
     );
 }
 
@@ -125,10 +130,12 @@ function buildAppointmentInspectionModal(modal, appointment) {
     modal.find(".modal-title").html("Appointment");
 
     modal.find(".modal-body").html(
-        "<div>" + appointment.date + "</div>" +
-        "<div>Customer: " + appointment.customer.firstName + " " + appointment.customer.lastName + "</div>" +
-        "<div>Notes</div>" +
-            "<div>" + appointment.notes + "</div>"
+        "<div><h2>" + appointment.date + "</h2></div>" +
+        "<div><h3>Customer: " + appointment.customer.firstName + " " + appointment.customer.lastName + "</h3></div>" +
+        "<div class='well'>" +
+        "<div><h4>Notes</h4></div>" +
+        "<div>" + appointment.notes + "</div>" +
+        "</div>"
     );
 }
 
