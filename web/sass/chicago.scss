@@ -6,6 +6,10 @@ body {
   background-color: $primaryColor;
 }
 
+a:hover {
+  cursor: pointer;
+}
+
 .mainContainer {
   margin-top: 50px;
 }

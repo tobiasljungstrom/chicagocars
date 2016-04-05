@@ -75,7 +75,7 @@ public class Customer implements Serializable {
 
         for (Car car : cars
                 ) {
-            carNames.add(car.toString());
+            carNames.add(car.getId() + " " + car.toString());
         }
 
         return carNames;
@@ -90,7 +90,7 @@ public class Customer implements Serializable {
 
         for (Appointment appointment : appointments
                 ) {
-            appointmentNames.add(appointment.toString());
+            appointmentNames.add(appointment.getId() + " " + appointment.toString());
         }
 
         return appointmentNames;

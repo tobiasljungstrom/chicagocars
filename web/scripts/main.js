@@ -90,7 +90,7 @@ function buildCustomerInspectionModal(modal, customer) {
         carListStrings = "No Cars";
     } else {
         for (var i = 0; i < carList.length; i++) {
-            carListStrings += "<p>" + carList[i] + "</p>";
+            carListStrings += "<p onclick='showInspectionModal(\"car\"," +  carList[i].substr(0, 1) + ")'><a>" + carList[i] + "</a></p>";
         }
     }
 
@@ -98,7 +98,7 @@ function buildCustomerInspectionModal(modal, customer) {
         appointmentListStrings = "No appointments";
     } else {
         for (var i = 0; i < appointmentList.length; i++) {
-            appointmentListStrings += "<p>" + appointmentList[i] + "</p>";
+            appointmentListStrings += "<p onclick='showInspectionModal(\"appointment\"," +  appointmentList[i].substr(0, 1) + ")'><a>" + appointmentList[i] + "</a></p>";
         }
     }
 
@@ -122,7 +122,7 @@ function buildCarInspectionModal(modal, car) {
     modal.find(".modal-body").html(
         "<div><h2>" + car.manufacturer + " " + car.model + "</h2></div>" +
         "<div><h3>License Number: " + car.licenseNumber + "</h3></div>" +
-        "<div onclick='showInspectionModal(\"customer\"," + car.owner.id + ")'><h4>Owner: " + car.owner.firstName + " " + car.owner.lastName + "</h4></div>"
+        "<div onclick='showInspectionModal(\"customer\"," + car.owner.id + ")'><h4>Owner: <a>" + car.owner.firstName + " " + car.owner.lastName + "</a></h4></div>"
     );
 }
 
@@ -131,7 +131,7 @@ function buildAppointmentInspectionModal(modal, appointment) {
 
     modal.find(".modal-body").html(
         "<div><h2>" + appointment.date + "</h2></div>" +
-        "<div><h3>Customer: " + appointment.customer.firstName + " " + appointment.customer.lastName + "</h3></div>" +
+        "<div onclick='showInspectionModal(\"customer\"," + appointment.customer.id + ")'><h3>Customer: <a>" + appointment.customer.firstName + " " + appointment.customer.lastName + "</a></h3></div>" +
         "<div class='well'>" +
         "<div><h4>Notes</h4></div>" +
         "<div>" + appointment.notes + "</div>" +

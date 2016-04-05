@@ -1,6 +1,9 @@
 body {
   background-color: #3e84ad; }
 
+a:hover {
+  cursor: pointer; }
+
 .mainContainer {
   margin-top: 50px; }
 
