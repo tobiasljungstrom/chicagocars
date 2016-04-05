@@ -78,7 +78,7 @@ $('document').ready(function () {
 });
 
 function buildCustomerInspectionModal(modal, customer) {
-    modal.find(".modal-title").html("Customer");
+    modal.find(".modal-title").html("<img src='images/customer.png'><span class='inspectionTitle'>Customer</span>");
 
     var carList = customer.cars;
     var appointmentList = customer.appointments;
@@ -117,7 +117,7 @@ function buildCustomerInspectionModal(modal, customer) {
 }
 
 function buildCarInspectionModal(modal, car) {
-    modal.find(".modal-title").html("Car");
+    modal.find(".modal-title").html("<img src='images/car.png'><span class='inspectionTitle'>Car</span>");
 
     modal.find(".modal-body").html(
         "<div><h2>" + car.manufacturer + " " + car.model + "</h2></div>" +
@@ -127,7 +127,7 @@ function buildCarInspectionModal(modal, car) {
 }
 
 function buildAppointmentInspectionModal(modal, appointment) {
-    modal.find(".modal-title").html("Appointment");
+    modal.find(".modal-title").html("<img src='images/appointment.png'><span class='inspectionTitle'>Appointment</span>");
 
     modal.find(".modal-body").html(
         "<div><h2>" + appointment.date + "</h2></div>" +

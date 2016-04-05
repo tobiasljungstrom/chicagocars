@@ -19,4 +19,7 @@ tr.activeRow {
   background-color: #98bfd5;
   cursor: pointer; }
 
+.inspectionTitle {
+  margin-left: 15px; }
+
 /*# sourceMappingURL=chicago.css.map */
