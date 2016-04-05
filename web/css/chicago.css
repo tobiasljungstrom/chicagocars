@@ -12,4 +12,8 @@ body {
   text-align: right;
   margin-bottom: 10px; }
 
+tr.activeRow {
+  background-color: #98bfd5;
+  cursor: pointer; }
+
 /*# sourceMappingURL=chicago.css.map */

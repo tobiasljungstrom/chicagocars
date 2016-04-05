@@ -1,4 +1,5 @@
 $primaryColor: #3e84ad;
+$secondaryColor: #98bfd5;
 $headerTextSize: 3em;
 
 body {
@@ -17,4 +18,9 @@ body {
 .headerButtonContainer {
   text-align: right;
   margin-bottom: 10px;
+}
+
+tr.activeRow {
+  background-color: $secondaryColor;
+  cursor: pointer;
 }

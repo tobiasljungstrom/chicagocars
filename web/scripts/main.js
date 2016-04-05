@@ -11,6 +11,7 @@ $('document').ready(function () {
     //Page preparation
     clearAllActivePages();
     hideAllAlerts();
+    resetForms()
     populateCustomerLists();
     activateCustomerPage();
 
@@ -72,7 +73,125 @@ $('document').ready(function () {
         submitData(body, appointmentURL);
 
     });
+
+
 });
+
+function buildCustomerInspectionModal(modal, customer) {
+    modal.find(".modal-title").html("Customer");
+
+    var carList = customer.cars;
+    var appointmentList = customer.appointments;
+
+    var carListStrings = "";
+    var appointmentListStrings = "";
+
+    if (carList.length < 1) {
+        carListStrings = "No Cars";
+    } else {
+        for (var i = 0; i < carList.length; i++) {
+            carListStrings += "<p>" + carList[i] + "</p>";
+        }
+    }
+
+    if (appointmentList.length < 1) {
+        appointmentListStrings = "No appointments";
+    } else {
+        for (var i = 0; i < appointmentList.length; i++) {
+            appointmentListStrings += "<p>" + appointmentList[i] + "</p>";
+        }
+    }
+
+    modal.find(".modal-body").html(
+        "<div>" + customer.firstName + " " + customer.lastName + "</div>" +
+        "<div>Customer id: " + customer.id + "</div>" +
+        "<div>" + customer.address + "</div>" +
+        "<div>" + carListStrings + "</div>" +
+        "<div>" + appointmentListStrings + "</div>"
+    );
+}
+
+function buildCarInspectionModal(modal, car) {
+    modal.find(".modal-title").html("Car");
+
+    modal.find(".modal-body").html(
+        "<div>" + car.manufacturer + " " + car.model + "</div>" +
+        "<div>License Number: " + car.licenseNumber + "</div>" +
+        "<div>Owner: " + car.owner.firstName + " " + car.owner.lastName + "</div>"
+    );
+}
+
+function buildAppointmentInspectionModal(modal, appointment) {
+    modal.find(".modal-title").html("Appointment");
+
+    modal.find(".modal-body").html(
+        "<div>" + appointment.date + "</div>" +
+        "<div>Customer: " + appointment.customer.firstName + " " + appointment.customer.lastName + "</div>" +
+        "<div>Notes</div>" +
+            "<div>" + appointment.notes + "</div>"
+    );
+}
+
+function showInspectionModal(dataType, id) {
+    var modal = $('#inspectionModal');
+
+    var dataObject;
+
+    if (dataType == "customer") {
+        console.log("Customer to display");
+        dataObject = getData(customerURL + id);
+
+        buildCustomerInspectionModal(modal, dataObject);
+
+    } else if (dataType == "car") {
+        console.log("Car to display");
+        dataObject = getData(carURL + id);
+
+        buildCarInspectionModal(modal, dataObject);
+
+    } else if (dataType == "appointment") {
+        console.log("Appointment to display");
+        dataObject = getData(appointmentURL + id);
+
+        console.log(dataObject);
+
+        buildAppointmentInspectionModal(modal, dataObject);
+    }
+
+    modal.modal("show");
+}
+
+function makeTableRowsHoverable() {
+    $('.customerTableRow').click(function () {
+            console.log("Clicked row " + $(this).data("id"));
+        })
+        .mouseover(function () {
+            $(this).addClass("activeRow");
+        })
+        .mouseleave(function () {
+            $(this).removeClass("activeRow");
+        });
+
+    $('.carsTableRow').click(function () {
+            console.log("Clicked row " + $(this).data("id"));
+        })
+        .mouseover(function () {
+            $(this).addClass("activeRow");
+        })
+        .mouseleave(function () {
+            $(this).removeClass("activeRow");
+        });
+
+    $('.appointmentsTableRow').click(function () {
+            console.log("Clicked row " + $(this).data("id"));
+        })
+        .mouseover(function () {
+            $(this).addClass("activeRow");
+        })
+        .mouseleave(function () {
+            $(this).removeClass("activeRow");
+        });
+}
 
 function populateCustomerLists() {
     var allCustomers = getData(customerURL + "all");
@@ -86,6 +205,18 @@ function populateCustomerLists() {
     }
 }
 
+function refreshTables() {
+    populateCustomerTable();
+    populateCarsTable();
+    populateAppointmentsTable();
+}
+
+function resetForms() {
+    $('#customerDisplayTable').trigger("reset");
+    $('#carsDisplayTable').trigger("reset");
+    $('#appointmentsDisplayTable').trigger("reset");
+}
+
 function submitData(body, url) {
     console.log("Submitting data: " + body);
 
@@ -95,6 +226,8 @@ function submitData(body, url) {
         data: body,
         success: function () {
             showAlert(statusCodeOK);
+            refreshTables();
+            resetForms();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showAlert(jqXHR.status);
@@ -140,7 +273,7 @@ function populateCustomerTable() {
 
     for (i = 0; i < allCustomers.length; i++) {
         tableBody.append(
-            "<tr>" +
+            "<tr class='customerTableRow' data-id='" + allCustomers[i].id + "' onclick='showInspectionModal(\"customer\", " + allCustomers[i].id + ")'>" +
             "<td>" + allCustomers[i].id + "</td>" +
             "<td>" + allCustomers[i].firstName + " " + allCustomers[i].lastName + "</td>" +
             "<td>" + allCustomers[i].email + "</td>" +
@@ -148,6 +281,7 @@ function populateCustomerTable() {
             "</tr>"
         )
     }
+    makeTableRowsHoverable();
 }
 
 function activateCustomerPage() {
@@ -168,7 +302,7 @@ function populateCarsTable() {
 
     for (i = 0; i < allCars.length; i++) {
         tableBody.append(
-            "<tr>" +
+            "<tr class='carsTableRow' data-id='" + allCars[i].id + "' onclick='showInspectionModal(\"car\", " + allCars[i].id + ")'>" +
             "<td>" + allCars[i].licenseNumber + "</td>" +
             "<td>" + allCars[i].manufacturer + "</td>" +
             "<td>" + allCars[i].model + "</td>" +
@@ -176,6 +310,7 @@ function populateCarsTable() {
             "</tr>"
         )
     }
+    makeTableRowsHoverable();
 }
 
 function activateCarsPage() {
@@ -204,13 +339,15 @@ function populateAppointmentsTable() {
 
     for (i = 0; i < allAppointments.length; i++) {
         tableBody.append(
-            "<tr>" +
+            "<tr class='appointmentsTableRow' data-id='" + allAppointments[i].id + "' onclick='showInspectionModal(\"appointment\", " + allAppointments[i].id + ")'>" +
             "<td>" + allAppointments[i].date + "</td>" +
             "<td>" + "[" + allAppointments[i].customer.id + "] " + allAppointments[i].customer.firstName + " " + allAppointments[i].customer.lastName + "</td>" +
             "<td>" + limitText(allAppointments[i].notes, 80) + "</td>" +
             "</tr>"
         )
     }
+
+    makeTableRowsHoverable();
 }
 
 function activateAppointmentsPage() {

@@ -8,10 +8,11 @@
     <!-- jQuery JS -->
     <script src="scripts/jquery-2.2.2.min.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="scripts/bootstrap.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Bootstrap JS -->
+    <script src="scripts/bootstrap.min.js"></script>
+
 
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="css/chicago.css">
@@ -103,7 +104,7 @@
 
         <!-- Customer table -->
         <div class="well">
-            <table class="table table-striped" id="customerDisplayTable">
+            <table class="table" id="customerDisplayTable">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -176,7 +177,7 @@
 
         <!-- Cars table -->
         <div class="well">
-            <table class="table table-striped" id="carsDisplayTable">
+            <table class="table" id="carsDisplayTable">
                 <thead>
                 <tr>
                     <th>License Number</th>
@@ -258,7 +259,7 @@
 
         <!-- Appointments table -->
         <div class="well">
-            <table class="table table-striped" id="appointmentsDisplayTable">
+            <table class="table" id="appointmentsDisplayTable">
                 <thead>
                 <tr>
                     <th>Date and Time</th>
@@ -270,6 +271,25 @@
 
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <!-- INSPECTION MODAL-->
+    <div class="modal fade" id="inspectionModal" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Title</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
