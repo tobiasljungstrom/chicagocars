@@ -22,4 +22,7 @@ tr.activeRow {
 .inspectionTitle {
   margin-left: 15px; }
 
+.inspectionModalDelete {
+  text-align: right; }
+
 /*# sourceMappingURL=chicago.css.map */

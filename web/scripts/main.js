@@ -102,7 +102,7 @@ function buildCustomerInspectionModal(modal, customer) {
         }
     }
 
-    modal.find(".modal-body").html(
+    modal.find(".inspectionModalBody").html(
         "<div><h2>" + customer.firstName + " " + customer.lastName + "</h2></div>" +
         "<div><h4>Customer id: " + customer.id + "</h4></div>" +
         "<div><h3>" + customer.address + "</h3></div>" +
@@ -114,22 +114,26 @@ function buildCustomerInspectionModal(modal, customer) {
         "<div>" + appointmentListStrings + "</div>" +
         "</div>"
     );
+
+    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"customer\", " + customer.id +  ")");
 }
 
 function buildCarInspectionModal(modal, car) {
     modal.find(".modal-title").html("<img src='images/car.png'><span class='inspectionTitle'>Car</span>");
 
-    modal.find(".modal-body").html(
+    modal.find(".inspectionModalBody").html(
         "<div><h2>" + car.manufacturer + " " + car.model + "</h2></div>" +
         "<div><h3>License Number: " + car.licenseNumber + "</h3></div>" +
         "<div onclick='showInspectionModal(\"customer\"," + car.owner.id + ")'><h4>Owner: <a>" + car.owner.firstName + " " + car.owner.lastName + "</a></h4></div>"
     );
+
+    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"car\", " + car.id +  ")");
 }
 
 function buildAppointmentInspectionModal(modal, appointment) {
     modal.find(".modal-title").html("<img src='images/appointment.png'><span class='inspectionTitle'>Appointment</span>");
 
-    modal.find(".modal-body").html(
+    modal.find(".inspectionModalBody").html(
         "<div><h2>" + appointment.date + "</h2></div>" +
         "<div onclick='showInspectionModal(\"customer\"," + appointment.customer.id + ")'><h3>Customer: <a>" + appointment.customer.firstName + " " + appointment.customer.lastName + "</a></h3></div>" +
         "<div class='well'>" +
@@ -137,6 +141,8 @@ function buildAppointmentInspectionModal(modal, appointment) {
         "<div>" + appointment.notes + "</div>" +
         "</div>"
     );
+
+    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"appointment\", " + appointment.id +  ")");
 }
 
 function showInspectionModal(dataType, id) {
@@ -160,10 +166,10 @@ function showInspectionModal(dataType, id) {
         console.log("Appointment to display");
         dataObject = getData(appointmentURL + id);
 
-        console.log(dataObject);
-
         buildAppointmentInspectionModal(modal, dataObject);
     }
+
+    hideAllAlerts();
 
     modal.modal("show");
 }
@@ -263,11 +269,46 @@ function getData(url) {
     return returnData;
 }
 
-function showAlert(statusCode) {
-    if (statusCode === statusCodeOK) {
-        $('.modal-footer .alert').html("Success!").addClass('alert-success').fadeIn();
+function doDelete(dataType, id) {
+    console.log("Deleting " + dataType + " with id " + id);
+
+    var deleteUrl = "";
+
+    if (dataType == "customer") {
+        deleteUrl = customerURL + id;
+    } else if (dataType == "car") {
+        deleteUrl = carURL + id;
+    } else if (dataType == "appointment") {
+        deleteUrl = appointmentURL + id;
     } else {
-        $('.modal-footer .alert').html("Error! Code: " + statusCode).addClass('alert-danger').fadeIn();
+        deleteUrl = "Invalid Data Type";
+    }
+
+    $.ajax(deleteUrl, {
+        type: "DELETE",
+        url: deleteUrl,
+        success: function () {
+            showAlert(statusCodeOK);
+            refreshTables();
+            resetForms();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showAlert(jqXHR.status);
+        }
+    });
+}
+
+function showAlert(statusCode) {
+
+    var alert = $('.modal-footer .alert');
+
+    alert.removeClass('alert-success');
+    alert.removeClass('alert-danger');
+
+    if (statusCode === statusCodeOK) {
+        alert.html("Success!").addClass('alert-success').fadeIn();
+    } else {
+        alert.html("Error! Code: " + statusCode).addClass('alert-danger').fadeIn();
     }
 
 }
