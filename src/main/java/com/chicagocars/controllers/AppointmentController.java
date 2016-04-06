@@ -41,7 +41,7 @@ public class AppointmentController {
 
     @CrossOrigin
     @RequestMapping(value = "/appointments/{id}", method = RequestMethod.DELETE)
-    public void deleteAppointment(Long id) {
+    public void deleteAppointment(@PathVariable Long id) {
         appointmentService.deleteAppointment(id);
     }
 }

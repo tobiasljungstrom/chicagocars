@@ -41,7 +41,7 @@ public class CustomerController {
 
     @CrossOrigin
     @RequestMapping(value = "/customers/{id}", method = RequestMethod.DELETE)
-    public void deleteCustomer(Long id) {
+    public void deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
     }
 

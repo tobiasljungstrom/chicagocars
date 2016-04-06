@@ -25,14 +25,14 @@ public class Customer implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private Set<Car> cars;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<Appointment> appointments;
 
     public Customer() {

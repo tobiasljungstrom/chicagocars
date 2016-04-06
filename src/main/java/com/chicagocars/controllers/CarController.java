@@ -41,7 +41,7 @@ public class CarController {
 
     @CrossOrigin
     @RequestMapping(value = "/cars/{id}", method = RequestMethod.DELETE)
-    public void deleteCar(Long id) {
+    public void deleteCar(@PathVariable Long id) {
         carService.deleteCar(id);
     }
 
