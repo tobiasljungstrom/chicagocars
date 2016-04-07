@@ -315,6 +315,7 @@ function populateCustomerLists() {
 }
 
 function refreshTables() {
+    console.log("Refreshing tables...")
     populateCustomerTable();
     populateCarsTable();
     populateAppointmentsTable();
@@ -373,11 +374,9 @@ function getData(url) {
         dataType: "json",
         async: false,
         success: function (data, textStatus, jqXHR) {
-            console.log("GET Success");
             returnData = data;
         },
         complete: function (jqXHR, textStatus) {
-            console.log("GET Complete");
         }
     });
 
@@ -521,6 +520,15 @@ function activateAppointmentsPage() {
     populateAppointmentsTable();
     $('#appointmentsPanel').show();
     $('#navButtonAppointments').addClass('active');
+}
+
+function activateStatsPage() {
+    console.log("Activating stats page");
+
+    clearAllActivePages();
+    hideAllAlerts();
+    $('#statsPanel').show();
+    $('#navButtonStats').addClass('active');
 }
 
 function hideAllAlerts() {
