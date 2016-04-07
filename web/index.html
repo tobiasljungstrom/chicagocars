@@ -17,9 +17,8 @@
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="css/chicago.css">
     <!-- Main JavaScript -->
-    <script src="scripts/main.js">
-
-    </script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/stats.js"></script>
 
 </head>
 
@@ -90,7 +89,9 @@
                             </div>
 
                         </form>
-                        <button id="submitCustomerButton" onclick="submitCustomer(null)" class="btn btn-default">Submit</button>
+                        <button id="submitCustomerButton" onclick="submitCustomer(null)" class="btn btn-default">
+                            Submit
+                        </button>
 
                     </div>
                     <div class="modal-footer">
@@ -200,7 +201,6 @@
     </div>
 
 
-
     <!-- APPOINTENTS -->
     <div class="well contentPanel" id="appointmentsPanel">
         <div class="panelHeader">Appointments</div>
@@ -256,7 +256,9 @@
 
 
                         </form>
-                        <button id="submitAppointmentButton" onclick="submitAppointment(null)" class="btn btn-default">Submit</button>
+                        <button id="submitAppointmentButton" onclick="submitAppointment(null)" class="btn btn-default">
+                            Submit
+                        </button>
 
                     </div>
                     <div class="modal-footer">
@@ -289,7 +291,30 @@
 
     <!-- STATS -->
     <div class="well contentPanel" id="statsPanel">
-        STATS
+        <div class="panelHeader">Database Statistics</div>
+        <div class="well">
+            <div class="row">
+                <div class="col-md-6">
+                <table id="statsTable" class="table">
+                    <thead>
+                    <tr>
+                        <th># of Customers</th>
+                        <th># of Cars</th>
+                        <th># of Appointments</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td id="totalCustomers"></td>
+                        <td id="totalCars"></td>
+                        <td id="totalAppointments"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+                <div class="col-md-6"></div>
+            </div>
+        </div>
     </div>
 
     <!-- INSPECTION MODAL-->

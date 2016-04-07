@@ -1,3 +1,5 @@
+/* MAIN.JS */
+
 //Global variables
 var customerURL = "http://localhost:8080/api/customers/";
 var carURL = "http://localhost:8080/api/cars/";
@@ -367,7 +369,7 @@ function updateData(body, url, id) {
 function getData(url) {
     console.log("Retrieving data...");
 
-    var returnData;
+    var returnData = {};
 
     $.ajax(url, {
         type: "GET",
@@ -529,6 +531,9 @@ function activateStatsPage() {
     hideAllAlerts();
     $('#statsPanel').show();
     $('#navButtonStats').addClass('active');
+
+    loadStats();
+    displayStats();
 }
 
 function hideAllAlerts() {
