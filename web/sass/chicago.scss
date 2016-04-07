@@ -33,6 +33,11 @@ tr.activeRow {
   margin-left: 15px;
 }
 
-.inspectionModalDelete {
+.inspectionModalDelete, .inspectionModalEdit {
   text-align: right;
+  margin-top: 10px;
+
+  button {
+    width: 100px;
+  }
 }

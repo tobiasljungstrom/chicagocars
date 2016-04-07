@@ -36,6 +36,7 @@ public class CustomerController {
     @CrossOrigin
     @RequestMapping(value = "/customers/{id}", method = RequestMethod.PUT)
     public void updateCustomer(@RequestBody Customer customer, @PathVariable Long id) {
+        customer.setId(id);
         customerService.saveCustomer(customer);
     }
 

@@ -87,8 +87,9 @@
                                 <input type="text" name="city" placeholder="City">
 
                             </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
+
                         </form>
+                        <button id="submitCustomerButton" onclick="submitCustomer(null)" class="btn btn-default">Submit</button>
 
                     </div>
                     <div class="modal-footer">
@@ -163,8 +164,9 @@
                                 </select>
 
                             </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
+
                         </form>
+                        <button id="submitCarButton" onclick="submitCar(null)" class="btn btn-default">Submit</button>
 
                     </div>
                     <div class="modal-footer">
@@ -225,6 +227,9 @@
 
                             <div class="form-group">
                                 <select name="time">
+                                    <option title="Please Select Time" disabled>Please Select Time
+                                    </option>
+                                    <option disabled></option>
                                     <option value="08:00">08:00</option>
                                     <option value="09:00">09:00</option>
                                     <option value="10:00">10:00</option>
@@ -238,7 +243,7 @@
 
                             <div class="form-group">
                                 <select name="appointmentOwner" title="Owner" id="appointmentOwnerSelector">
-                                    <option title="Please Select Customer" selected disabled>Please Select Customer
+                                    <option title="Please Select Customer" disabled>Please Select Customer
                                     </option>
                                     <option disabled></option>
                                 </select>
@@ -248,8 +253,9 @@
                                 <textarea name="notes" rows="5" cols="70"></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-default">Submit</button>
+
                         </form>
+                        <button id="submitAppointmentButton" onclick="submitAppointment(null)" class="btn btn-default">Submit</button>
 
                     </div>
                     <div class="modal-footer">
@@ -291,6 +297,9 @@
                 <div class="modal-body">
                     <div class="inspectionModalBody">
 
+                    </div>
+                    <div class="inspectionModalEdit">
+                        <button id="inspectionEditButton" class="btn btn-info">Edit</button>
                     </div>
                     <div class="inspectionModalDelete">
                         <button id="inspectionDeleteButton" class="btn btn-danger">Delete</button>

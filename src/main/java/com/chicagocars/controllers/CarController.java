@@ -36,6 +36,7 @@ public class CarController {
     @CrossOrigin
     @RequestMapping(value = "/cars/{id}", method = RequestMethod.PUT)
     public void updateCar(@RequestBody Car car, @PathVariable Long id) {
+        car.setId(id);
         carService.saveCar(car);
     }
 

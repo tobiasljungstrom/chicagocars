@@ -25,7 +25,7 @@ public class Customer implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @ManyToOne(cascade = CascadeType.PERSIST) //Creates an address when a Customer is created
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Creates an address when a Customer is created
     @JoinColumn(name = "address_id")
     private Address address;
 

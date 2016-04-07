@@ -11,71 +11,161 @@ $('document').ready(function () {
     //Page preparation
     clearAllActivePages();
     hideAllAlerts();
-    resetForms()
+    resetForms();
     populateCustomerLists();
     activateCustomerPage();
 
-    //Forms
-    $('#newCustomerForm').on("submit", function (e) {
+    $("#newcustomerform").on("submit", function(e) {
         e.preventDefault();
-
-        var formData = $(this).serializeObject();
-
-        var address = {
-            "street": formData.street,
-            "postcode": formData.postcode,
-            "city": formData.city
-        };
-
-        var body = {
-            "firstName": formData.firstName,
-            "lastName": formData.lastName,
-            "email": formData.email,
-            "address": address
-        };
-
-        body = JSON.stringify(body);
-
-        submitData(body, customerURL);
     });
-
-    $('#newCarForm').on("submit", function (e) {
+    $("#newCarForm").on("submit", function(e) {
         e.preventDefault();
-
-        var formData = $(this).serializeObject();
-
-        var body = {
-            "licenseNumber": formData.licenseNumber,
-            "manufacturer": formData.manufacturer,
-            "model": formData.model,
-            "owner": {"id": formData.carOwner}
-        };
-
-        body = JSON.stringify(body);
-
-        submitData(body, carURL);
     });
-
-    $('#newAppointmentForm').on("submit", function (e) {
-
+    $("#newAppointmentForm").on("submit", function(e) {
         e.preventDefault();
-
-        var formData = $(this).serializeObject();
-
-        var body = {
-            "date": formData.date + "T" + formData.time + ":00.000" + TIMEZONE,
-            "customer": {"id": formData.appointmentOwner},
-            "notes": formData.notes
-        };
-
-        body = JSON.stringify(body);
-
-        submitData(body, appointmentURL);
-
     });
 
 
 });
+
+function submitCustomer(id) {
+    console.log("Submitting customer with id " + id);
+
+    var formData = $('#newCustomerForm').serializeObject();
+
+    var address = {
+        "street": formData.street,
+        "postcode": formData.postcode,
+        "city": formData.city
+    };
+
+    var body = {
+        "firstName": formData.firstName,
+        "lastName": formData.lastName,
+        "email": formData.email,
+        "address": address
+    };
+
+    body = JSON.stringify(body);
+
+    if(id == null) {
+        submitData(body, customerURL);
+    } else {
+        updateData(body, customerURL, id);
+    }
+}
+
+function submitCar(id) {
+    console.log("Submitting car with id " + id);
+
+    var formData = $('#newCarForm').serializeObject();
+
+    var body = {
+        "licenseNumber": formData.licenseNumber,
+        "manufacturer": formData.manufacturer,
+        "model": formData.model,
+        "owner": {"id": formData.carOwner}
+    };
+
+    body = JSON.stringify(body);
+
+    if(id == null) {
+        submitData(body, carURL);
+    } else {
+        updateData(body, carURL, id);
+    }
+}
+
+function submitAppointment(id) {
+    console.log("Submitting appointment with id " + id);
+
+    var formData = $('#newAppointmentForm').serializeObject();
+
+    var body = {
+        "date": formData.date + "T" + formData.time + ":00.000" + TIMEZONE,
+        "customer": {"id": formData.appointmentOwner},
+        "notes": formData.notes
+    };
+
+    body = JSON.stringify(body);
+    console.log(body);
+
+    if(id == null) {
+        submitData(body, appointmentURL);
+        console.log("null");
+    } else {
+        updateData(body, appointmentURL, id);
+        console.log("UpdateData: " + body + " - " + appointmentURL + id);
+    }
+}
+
+function extractAddress(address) {
+    return address.split(", ");
+
+}
+
+function truncateToYear(date) {
+    return date.substr(0, 10);
+}
+function truncateToTime(date) {
+    console.log(date.substr(11, 15));
+    return date.substr(11, 15);
+}
+function activateEditModal(dataType, id) {
+
+    console.log("Editing " + dataType + " " + id);
+    
+    var modal;
+    
+    if (dataType == "customer") {
+        
+        modal = $("#newCustomerModal");
+        
+        var currentCustomer = getData(customerURL + id);
+
+        var currentAddress = extractAddress(currentCustomer.address);
+        
+        modal.find("[name='firstName']").attr("value", currentCustomer.firstName);
+        modal.find("[name='lastName']").attr("value", currentCustomer.lastName);
+        modal.find("[name='email']").attr("value", currentCustomer.email);
+        modal.find("[name='street']").attr("value", currentAddress[0]);
+        modal.find("[name='postcode']").attr("value", currentAddress[1]);
+        modal.find("[name='city']").attr("value", currentAddress[2]);
+
+        modal.find("#submitCustomerButton").attr("onclick", "submitCustomer(" + currentCustomer.id + ")");
+        
+    } else if (dataType == "car") {
+        modal = $("#newCarModal");
+
+        var currentCar = getData(carURL + id);
+
+        modal.find("[name='licenseNumber']").attr("value", currentCar.licenseNumber);
+        modal.find("[name='manufacturer']").attr("value", currentCar.manufacturer);
+        modal.find("[name='model']").attr("value", currentCar.model);
+        modal.find("option[value='" + currentCar.owner.id + "']").attr("selected", "selected");
+
+        modal.find("#submitCarButton").attr("onclick", "submitCar(" + currentCar.id + ")");
+    } else if (dataType == "appointment") {
+        modal = $("#newAppointmentModal");
+
+        var currentAppointment = getData(appointmentURL + id);
+
+        modal.find("[name='date']").attr("value", truncateToYear(currentAppointment.date));
+        modal.find("option[value='" + currentAppointment.customer.id + "']").attr("selected", "selected");
+        modal.find("option[value='" + truncateToTime(currentAppointment.date) + "']").attr("selected", "selected");
+        modal.find("[name='notes']").html(currentAppointment.notes);
+
+        modal.find("#submitAppointmentButton").attr("onclick", "submitAppointment(" + currentAppointment.id + ")");
+    }
+
+    modal.find("[type='submit']").html("Update");
+    modal.find(".modal-title").html("Update " + dataType);
+
+
+    $('#inspectionModal').modal("hide");
+    modal.modal("show");
+
+}
 
 function buildCustomerInspectionModal(modal, customer) {
     modal.find(".modal-title").html("<img src='images/customer.png'><span class='inspectionTitle'>Customer</span>");
@@ -90,7 +180,7 @@ function buildCustomerInspectionModal(modal, customer) {
         carListStrings = "No Cars";
     } else {
         for (var i = 0; i < carList.length; i++) {
-            carListStrings += "<p onclick='showInspectionModal(\"car\"," +  carList[i].substr(0, 1) + ")'><a>" + carList[i] + "</a></p>";
+            carListStrings += "<p onclick='showInspectionModal(\"car\"," + carList[i].substr(0, 1) + ")'><a>" + carList[i] + "</a></p>";
         }
     }
 
@@ -98,7 +188,7 @@ function buildCustomerInspectionModal(modal, customer) {
         appointmentListStrings = "No appointments";
     } else {
         for (var i = 0; i < appointmentList.length; i++) {
-            appointmentListStrings += "<p onclick='showInspectionModal(\"appointment\"," +  appointmentList[i].substr(0, 1) + ")'><a>" + appointmentList[i] + "</a></p>";
+            appointmentListStrings += "<p onclick='showInspectionModal(\"appointment\"," + appointmentList[i].substr(0, 1) + ")'><a>" + appointmentList[i] + "</a></p>";
         }
     }
 
@@ -115,7 +205,9 @@ function buildCustomerInspectionModal(modal, customer) {
         "</div>"
     );
 
-    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"customer\", " + customer.id +  ")");
+    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"customer\", " + customer.id + ")");
+
+    modal.find("#inspectionEditButton").attr("onclick", "activateEditModal(\"customer\", " + customer.id + ")");
 }
 
 function buildCarInspectionModal(modal, car) {
@@ -127,7 +219,9 @@ function buildCarInspectionModal(modal, car) {
         "<div onclick='showInspectionModal(\"customer\"," + car.owner.id + ")'><h4>Owner: <a>" + car.owner.firstName + " " + car.owner.lastName + "</a></h4></div>"
     );
 
-    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"car\", " + car.id +  ")");
+    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"car\", " + car.id + ")");
+
+    modal.find("#inspectionEditButton").attr("onclick", "activateEditModal(\"car\", " + car.id + ")");
 }
 
 function buildAppointmentInspectionModal(modal, appointment) {
@@ -142,7 +236,9 @@ function buildAppointmentInspectionModal(modal, appointment) {
         "</div>"
     );
 
-    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"appointment\", " + appointment.id +  ")");
+    modal.find("#inspectionDeleteButton").attr("onclick", "doDelete(\"appointment\", " + appointment.id + ")");
+
+    modal.find("#inspectionEditButton").attr("onclick", "activateEditModal(\"appointment\", " + appointment.id + ")");
 }
 
 function showInspectionModal(dataType, id) {
@@ -225,9 +321,7 @@ function refreshTables() {
 }
 
 function resetForms() {
-    $('#customerDisplayTable').trigger("reset");
-    $('#carsDisplayTable').trigger("reset");
-    $('#appointmentsDisplayTable').trigger("reset");
+    $('form').trigger("reset");
 }
 
 function submitData(body, url) {
@@ -241,6 +335,27 @@ function submitData(body, url) {
             showAlert(statusCodeOK);
             refreshTables();
             resetForms();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            showAlert(jqXHR.status);
+        }
+    });
+}
+
+function updateData(body, url, id) {
+    console.log("Updating data with id " + id + ": " + body);
+
+    var updateUrl = url + id;
+    console.log(body);
+    console.log (updateUrl);
+
+    $.ajax(updateUrl, {
+        type: "PUT",
+        contentType: "application/json",
+        data: body,
+        success: function () {
+            showAlert(statusCodeOK);
+            refreshTables();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showAlert(jqXHR.status);

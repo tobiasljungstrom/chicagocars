@@ -36,6 +36,7 @@ public class AppointmentController {
     @CrossOrigin
     @RequestMapping(value = "/appointments/{id}", method = RequestMethod.PUT)
     public void updateAppointment(@RequestBody Appointment appointment, @PathVariable Long id) {
+        appointment.setId(id);
         appointmentService.saveAppointment(appointment);
     }
 
