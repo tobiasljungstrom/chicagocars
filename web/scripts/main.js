@@ -27,6 +27,10 @@ $('document').ready(function () {
         e.preventDefault();
     });
 
+    $("#newCarButton").click(function() {
+        resetForms();
+    });
+
 
 });
 

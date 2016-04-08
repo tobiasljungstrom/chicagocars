@@ -46,7 +46,7 @@
     <div class="well contentPanel" id="customersPanel">
         <div class="panelHeader">Customers</div>
         <div class="headerButtonContainer">
-            <button type="button" class="btn btn-default btn-success" id="#newCustomerButton" data-toggle="modal"
+            <button type="button" class="btn btn-default btn-success" id="newCustomerButton" data-toggle="modal"
                     data-target="#newCustomerModal">Add New Customer
             </button>
         </div>
@@ -129,7 +129,7 @@
     <div class="well contentPanel" id="carsPanel">
         <div class="panelHeader">Cars</div>
         <div class="headerButtonContainer">
-            <button type="button" class="btn btn-default btn-success" id="#newCarButton" data-toggle="modal"
+            <button type="button" class="btn btn-default btn-success" id="newCarButton" data-toggle="modal"
                     data-target="#newCarModal">
                 Add New Car
             </button>
@@ -205,7 +205,7 @@
     <div class="well contentPanel" id="appointmentsPanel">
         <div class="panelHeader">Appointments</div>
         <div class="headerButtonContainer">
-            <button type="button" class="btn btn-default btn-success" id="#newAppointmentButton" data-toggle="modal"
+            <button type="button" class="btn btn-default btn-success" id="newAppointmentButton" data-toggle="modal"
                     data-target="#newAppointmentModal">Add New Appointment
             </button>
         </div>
@@ -297,27 +297,57 @@
 
                 <!-- DB STATS -->
                 <div class="col-md-6">
-                <table id="databaseStatsTable" class="table">
-                    <thead>
-                    <tr>
-                        <th># of Customers</th>
-                        <th># of Cars</th>
-                        <th># of Appointments</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td id="totalCustomers"></td>
-                        <td id="totalCars"></td>
-                        <td id="totalAppointments"></td>
-                    </tr>
-                    </tbody>
-                </table>
+
+                    <table id="databaseStatsTable" class="table">
+                        <div class="tableTitle"><h3>Total items in database</h3></div>
+                        <thead>
+                        <tr>
+                            <th># of Customers</th>
+                            <th># of Cars</th>
+                            <th># of Appointments</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td id="totalCustomers"></td>
+                            <td id="totalCars"></td>
+                            <td id="totalAppointments"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <table id="monthsStatsTable" class="table">
+                        <div class="tableTitle"><h3>Appointments per calendar month</h3></div>
+                        <thead>
+                        <tr>
+                            <th>Jan</th>
+                            <th>Feb</th>
+                            <th>Mar</th>
+                            <th>Apr</th>
+                            <th>May</th>
+                            <th>Jun</th>
+                            <th>Jul</th>
+                            <th>Aug</th>
+                            <th>Sep</th>
+                            <th>Oct</th>
+                            <th>Nov</th>
+                            <th>Dec</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
                 </div>
 
                 <!-- CITY STATS -->
                 <div class="col-md-6">
+
                     <table id="cityStatsTable" class="table">
+                        <div class="tableTitle"><h3>Customers per City</h3></div>
                         <thead>
                         <tr>
                             <th>City</th>

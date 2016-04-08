@@ -19,7 +19,36 @@ function displayStats() {
     var sortedCities = sortAndGroup(allCities);
 
     displayCityStats(sortedCities);
+    displayDatabaseStats();
 
+    displayMonthsStats();
+
+}
+
+function displayMonthsStats() {
+    var countedMonths = getMonthsArray();
+    var tableRow = $("#monthsStatsTable tbody tr");
+
+    console.log(countedMonths);
+
+    for (var i = 0; i < countedMonths.length; i++) {
+        tableRow.append("<td>" + countedMonths[i] + "</td>");
+    }
+
+}
+
+function getMonthsArray() {
+    var countArray = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+    for (var i = 0; i < allAppointments.length; i++) {
+        var currentMonth = allAppointments[i].date.substr(5, 2).valueOf() - 1;
+        countArray[currentMonth]++;
+    }
+
+    return countArray;
+}
+
+function displayDatabaseStats() {
     $("#totalCustomers").html(allCustomers.length);
     $("#totalCars").html(allCars.length);
     $("#totalAppointments").html(allAppointments.length);
@@ -45,32 +74,32 @@ function createCitiesArray() {
     return returnArray;
 }
 
-function sortAndGroup(stringArray) {
+function sortAndGroup(itemArray) {
 
-    var names = [];
+    var items = [];
     var count = [];
 
-    stringArray.sort();
+    itemArray.sort();
 
-    for (var i = 0; i < stringArray.length; i++) {
-        if (stringArray[i] !== stringArray[i - 1]) {
-            names.push(stringArray[i]);
+    for (var i = 0; i < itemArray.length; i++) {
+        if (itemArray[i] !== itemArray[i - 1]) {
+            items.push(itemArray[i]);
             count.push(1);
         } else {
             count[count.length - 1]++;
         }
     }
 
-    return [names, count];
+    return [items, count];
 }
 
 /*
-function existsInArray(array, value) {
-    for (var i = 0; i < array.length; i++) {
-        if( array[i].match(value)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}*/
+ function existsInArray(array, value) {
+ for (var i = 0; i < array.length; i++) {
+ if( array[i].match(value)) {
+ return true;
+ } else {
+ return false;
+ }
+ }
+ }*/
