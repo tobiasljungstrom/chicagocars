@@ -15,21 +15,33 @@ function loadStats() {
 function displayStats() {
     console.log("Displaying Stats");
 
-    var allCities = createCitiesArray();
-    var sortedCities = sortAndGroup(allCities);
-
-    displayCityStats(sortedCities);
+    displayCityStats();
     displayDatabaseStats();
-
     displayMonthsStats();
+    displayCarStats();
 
+}
+
+function displayCarStats() {
+    var allManufacturers = createManufacturersArray();
+    var sortedManufacturers = sortAndGroup(allManufacturers);
+
+    var tableBody = $("#carsStatsTable").find("tbody");
+
+    tableBody.html("");
+
+    for (var i = 0; i < sortedManufacturers[0].length; i++) {
+        tableBody.append("<tr><td>" + sortedManufacturers[0][i] +
+            "</td><td>" + sortedManufacturers[1][i] +
+            "</td></tr>")
+    }
 }
 
 function displayMonthsStats() {
     var countedMonths = getMonthsArray();
     var tableRow = $("#monthsStatsTable tbody tr");
 
-    console.log(countedMonths);
+    tableRow.html("");
 
     for (var i = 0; i < countedMonths.length; i++) {
         tableRow.append("<td>" + countedMonths[i] + "</td>");
@@ -54,10 +66,16 @@ function displayDatabaseStats() {
     $("#totalAppointments").html(allAppointments.length);
 }
 
-function displayCityStats(sortedCities) {
+function displayCityStats() {
+    var allCities = createCitiesArray();
+    var sortedCities = sortAndGroup(allCities);
+
+    var tableBody = $("#cityStatsTable").find("tbody");
+
+    tableBody.html("");
 
     for (var i = 0; i < sortedCities[0].length; i++) {
-        $("#cityStatsTable").find("tbody").append("<tr><td>" + sortedCities[0][i] +
+        tableBody.append("<tr><td>" + sortedCities[0][i] +
             "</td><td>" + sortedCities[1][i] +
             "</td></tr>")
     }
@@ -67,8 +85,20 @@ function createCitiesArray() {
     var returnArray = [];
 
     for (var i = 0; i < allCustomers.length; i++) {
-        var city = extractAddress(allCustomers[i].address);
-        returnArray.push(city[2]);
+        var addressArray = extractAddress(allCustomers[i].address);
+        var city = addressArray[2];
+        returnArray.push(city);
+    }
+
+    return returnArray;
+}
+
+function createManufacturersArray() {
+    var returnArray = [];
+
+    for (var i = 0; i < allCars.length; i++) {
+        var manufacturer = allCars[i].manufacturer;
+        returnArray.push(manufacturer);
     }
 
     return returnArray;
@@ -92,14 +122,3 @@ function sortAndGroup(itemArray) {
 
     return [items, count];
 }
-
-/*
- function existsInArray(array, value) {
- for (var i = 0; i < array.length; i++) {
- if( array[i].match(value)) {
- return true;
- } else {
- return false;
- }
- }
- }*/
