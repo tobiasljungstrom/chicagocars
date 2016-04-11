@@ -1,5 +1,11 @@
 /* MAIN.JS */
 
+//Before anything, verify
+var currentUser = verifyUser();
+if (currentUser != -1) {
+    window.location = "index.html";
+}
+
 //Global variables
 var customerURL = "http://localhost:8080/api/customers/";
 var carURL = "http://localhost:8080/api/cars/";

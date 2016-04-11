@@ -64,7 +64,7 @@ public class LoginService {
     }
 
     public Verification getCurrentUser() {
-        
+
         System.out.println("Returning: " + session.getAttribute("user").toString());
         return (Verification) session.getAttribute("user");
     }
