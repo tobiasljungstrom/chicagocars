@@ -84,3 +84,4 @@ function doDelete(dataType, id) {
         }
     });
 }
+

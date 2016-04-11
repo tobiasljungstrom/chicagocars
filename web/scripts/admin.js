@@ -191,8 +191,11 @@ function buildCustomerInspectionModal(modal, customer) {
     if (carList.length < 1) {
         carListStrings = "No Cars";
     } else {
+
         for (var i = 0; i < carList.length; i++) {
-            carListStrings += "<p onclick='showInspectionModal(\"car\"," + carList[i].substr(0, 1) + ")'><a>" + carList[i] + "</a></p>";
+            var currentCarSplit = carList[i].split(" ");
+            var currentCar = currentCarSplit[0];
+            carListStrings += "<p onclick='showInspectionModal(\"car\"," + currentCar + ")'><a>" + carList[i] + "</a></p>";
         }
     }
 
@@ -200,7 +203,9 @@ function buildCustomerInspectionModal(modal, customer) {
         appointmentListStrings = "No appointments";
     } else {
         for (var i = 0; i < appointmentList.length; i++) {
-            appointmentListStrings += "<p onclick='showInspectionModal(\"appointment\"," + appointmentList[i].substr(0, 1) + ")'><a>" + appointmentList[i] + "</a></p>";
+            var currentAppointmentSplit = appointmentList[i].split(" ");
+            var currentAppointment = currentAppointmentSplit[0];
+            appointmentListStrings += "<p onclick='showInspectionModal(\"appointment\"," + currentAppointment + ")'><a>" + appointmentList[i] + "</a></p>";
         }
     }
 
@@ -255,7 +260,7 @@ function buildAppointmentInspectionModal(modal, appointment) {
 
 function showInspectionModal(dataType, id) {
     var modal = $('#inspectionModal');
-
+    
     var dataObject;
 
     if (dataType == "customer") {

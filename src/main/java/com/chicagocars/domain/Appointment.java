@@ -67,13 +67,6 @@ public class Appointment implements Serializable {
 
     @Override
     public String toString() {
-        return date.toString()
-                + " - "
-                + customer.getFirstName()
-                + " "
-                + customer.getLastName()
-                + "("
-                + customer.getId()
-                + ")";
+        return date.toString();
     }
 }

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+
+    $(".alert").hide();
+
     $("#loginButton").click(function(){
 
         var username = $("#usernameInput").val();
@@ -18,7 +21,7 @@ $(document).ready(function(){
         } else if (user > 0) {
             window.location = "customer.html";
         } else {
-            console.log("FAILLL");
+            $(".alert").fadeIn();
         }
 
     });

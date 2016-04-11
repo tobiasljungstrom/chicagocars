@@ -42,3 +42,8 @@ function verifyUser() {
 
     return returnValue;
 }
+
+function logout(){
+    sendVerification("0", "0");
+    window.location = "index.html";
+}
