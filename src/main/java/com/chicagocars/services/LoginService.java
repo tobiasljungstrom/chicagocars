@@ -31,6 +31,8 @@ public class LoginService {
         String currentPassword = verificationRequest.getPassword();
         String currentUsername = verificationRequest.getUsername();
 
+        System.out.println("Recieved: " + currentUsername + " + " + currentPassword);
+
         if (currentUsername.equals(ADMIN_NAME) && currentPassword.equals(ADMIN_PASSWORD)) {
             verificationResult.setUserId(-1);
         } else {
@@ -39,15 +41,17 @@ public class LoginService {
         }
 
         session.setAttribute("user", verificationResult);
+        System.out.println("Set user to: " + session.getAttribute("user").toString());
     }
 
     private long findUserId(String username) {
+        System.out.println("Looking for " + username);
         List<Customer> customers = customerRepository.findAll();
 
         for (Customer customer :
                 customers) {
             if (customer.getEmail().equals(username)) {
-
+                System.out.println("Match!");
                 return customer.getId();
             }
         }
@@ -60,7 +64,8 @@ public class LoginService {
     }
 
     public Verification getCurrentUser() {
-        session = getSessionObject();
+        
+        System.out.println("Returning: " + session.getAttribute("user").toString());
         return (Verification) session.getAttribute("user");
     }
 }
