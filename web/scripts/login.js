@@ -7,11 +7,19 @@ $(document).ready(function(){
         sendVerification(username, password)
     });
 
-    $("#verifyButton").click(function(){
+    $("form").on("submit", function(e){
+
+        e.preventDefault();
 
         var user = verifyUser();
-
-        $("p").html(user);
+        
+        if (user < 0) {
+            window.location = "admin.html";
+        } else if (user > 0) {
+            window.location = "customer.html";
+        } else {
+            console.log("FAILLL");
+        }
 
     });
 });

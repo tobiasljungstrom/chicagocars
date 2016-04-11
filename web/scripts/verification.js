@@ -15,6 +15,7 @@ function sendVerification(username, password) {
         type: "POST",
         contentType: "application/json",
         data: body,
+        async: false,
         success: function () {
             console.log("Success");
         },
