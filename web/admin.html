@@ -7,6 +7,7 @@
 
     <!-- jQuery JS -->
     <script src="scripts/jquery-2.2.2.min.js"></script>
+    <script src="scripts/jquery.validate.min.js"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -69,27 +70,27 @@
                         <!-- Input Form -->
                         <form role="form" id="newCustomerForm">
                             <div class="form-group">
-                                <input type="text" name="firstName" placeholder="First Name">
+                                <input type="text" name="firstName" placeholder="First Name" required>
 
                             </div>
                             <div class="form-group">
-                                <input type="text" name="lastName" placeholder="Last Name">
+                                <input type="text" name="lastName" placeholder="Last Name" required>
 
                             </div>
                             <div class="form-group">
-                                <input type="email" name="email" placeholder="E-mail">
+                                <input type="email" name="email" placeholder="E-mail" required>
 
                             </div>
                             <div class="form-group">
-                                <input type="text" name="street" placeholder="Street">
+                                <input type="text" name="street" placeholder="Street" required>
 
                             </div>
                             <div class="form-group">
-                                <input type="text" name="postcode" placeholder="Postcode">
+                                <input type="text" name="postcode" placeholder="Postcode" required>
 
                             </div>
                             <div class="form-group">
-                                <input type="text" name="city" placeholder="City">
+                                <input type="text" name="city" placeholder="City" required>
 
                             </div>
 
@@ -153,19 +154,19 @@
                         <!-- Input Form -->
                         <form role="form" id="newCarForm">
                             <div class="form-group">
-                                <input type="text" name="licenseNumber" placeholder="License Number">
+                                <input type="text" name="licenseNumber" placeholder="License Number" required>
 
                             </div>
                             <div class="form-group">
-                                <input type="text" name="manufacturer" placeholder="Manufacturer">
+                                <input type="text" name="manufacturer" placeholder="Manufacturer" required>
 
                             </div>
                             <div class="form-group">
-                                <input type="email" name="model" placeholder="Model">
+                                <input type="text" name="model" placeholder="Model" required>
 
                             </div>
                             <div class="form-group">
-                                <select name="carOwner" title="Owner" id="carOwnerSelector">
+                                <select name="carOwner" id="carOwnerSelector" required>
                                     <option title="Please Select Owner" selected disabled>Please Select Owner</option>
                                     <option disabled></option>
                                 </select>
@@ -228,11 +229,11 @@
                         <!-- Input Form -->
                         <form role="form" id="newAppointmentForm">
                             <div class="form-group">
-                                <input type="date" name="date" placeholder="Date (YYYY-MM-DD)">
+                                <input type="date" id="appointmentDate" name="date" placeholder="Date (YYYY-MM-DD)" title="YYYY-MM-DD" required>
                             </div>
 
                             <div class="form-group">
-                                <select name="time">
+                                <select name="time" required>
                                     <option title="Please Select Time" disabled>Please Select Time
                                     </option>
                                     <option disabled></option>
@@ -248,7 +249,7 @@
                             </div>
 
                             <div class="form-group">
-                                <select name="appointmentOwner" title="Owner" id="appointmentOwnerSelector">
+                                <select name="appointmentOwner" id="appointmentOwnerSelector" required>
                                     <option title="Please Select Customer" disabled>Please Select Customer
                                     </option>
                                     <option disabled></option>

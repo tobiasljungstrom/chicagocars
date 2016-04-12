@@ -1,6 +1,6 @@
 package com.chicagocars.controllers;
 
-import com.chicagocars.domain.Verification;
+import com.chicagocars.domain.VerificationResponse;
 import com.chicagocars.domain.VerificationRequest;
 import com.chicagocars.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class LoginController {
 
     @CrossOrigin
     @RequestMapping(value = "/login/", method = RequestMethod.GET)
-    public ResponseEntity<Verification> getCurrentUser () {
-        return new ResponseEntity<Verification>(loginService.getCurrentUser(), HttpStatus.OK);
+    public ResponseEntity<VerificationResponse> getCurrentUser () {
+        return new ResponseEntity<VerificationResponse>(loginService.getCurrentUser(), HttpStatus.OK);
     }
 }

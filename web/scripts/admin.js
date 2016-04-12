@@ -13,6 +13,7 @@ var appointmentURL = "http://localhost:8080/api/appointments/";
 var TIMEZONE = "+0200";
 
 var statusCodeOK = 1;
+var statusCodeInvalidForm = 2;
 
 $('document').ready(function () {
 
@@ -23,17 +24,17 @@ $('document').ready(function () {
     populateCustomerLists();
     activateCustomerPage();
 
-    $("#newcustomerform").on("submit", function(e) {
+    $("#newcustomerform").on("submit", function (e) {
         e.preventDefault();
     });
-    $("#newCarForm").on("submit", function(e) {
+    $("#newCarForm").on("submit", function (e) {
         e.preventDefault();
     });
-    $("#newAppointmentForm").on("submit", function(e) {
+    $("#newAppointmentForm").on("submit", function (e) {
         e.preventDefault();
     });
 
-    $("#newCarButton").click(function() {
+    $("#newCarButton").click(function () {
         resetForms();
     });
 
@@ -43,71 +44,107 @@ $('document').ready(function () {
 function submitCustomer(id) {
     console.log("Submitting customer with id " + id);
 
-    var formData = $('#newCustomerForm').serializeObject();
+    var form = $("#newCustomerForm");
 
-    var address = {
-        "street": formData.street,
-        "postcode": formData.postcode,
-        "city": formData.city
-    };
+    form.validate();
 
-    var body = {
-        "firstName": formData.firstName,
-        "lastName": formData.lastName,
-        "email": formData.email,
-        "address": address
-    };
+    if (form.valid()) {
+        console.log("Valid");
 
-    body = JSON.stringify(body);
 
-    if(id == null) {
-        submitData(body, customerURL);
+        var formData = form.serializeObject();
+
+        var address = {
+            "street": formData.street,
+            "postcode": formData.postcode,
+            "city": formData.city
+        };
+
+        var body = {
+            "firstName": formData.firstName,
+            "lastName": formData.lastName,
+            "email": formData.email,
+            "address": address
+        };
+
+        body = JSON.stringify(body);
+
+        if (id == null) {
+            submitData(body, customerURL);
+        } else {
+            updateData(body, customerURL, id);
+        }
     } else {
-        updateData(body, customerURL, id);
+        showAlert(statusCodeInvalidForm);
     }
 }
 
 function submitCar(id) {
     console.log("Submitting car with id " + id);
 
-    var formData = $('#newCarForm').serializeObject();
+    var form = $('#newCarForm');
 
-    var body = {
-        "licenseNumber": formData.licenseNumber,
-        "manufacturer": formData.manufacturer,
-        "model": formData.model,
-        "owner": {"id": formData.carOwner}
-    };
+    form.validate();
 
-    body = JSON.stringify(body);
+    if (form.valid()) {
 
-    if(id == null) {
-        submitData(body, carURL);
+        var formData = form.serializeObject();
+
+        var body = {
+            "licenseNumber": formData.licenseNumber,
+            "manufacturer": formData.manufacturer,
+            "model": formData.model,
+            "owner": {"id": formData.carOwner}
+        };
+
+        body = JSON.stringify(body);
+
+        if (id == null) {
+            submitData(body, carURL);
+        } else {
+            updateData(body, carURL, id);
+        }
     } else {
-        updateData(body, carURL, id);
+        showAlert(statusCodeInvalidForm);
     }
 }
 
 function submitAppointment(id) {
     console.log("Submitting appointment with id " + id);
 
-    var formData = $('#newAppointmentForm').serializeObject();
+    var form = $('#newAppointmentForm');
 
-    var body = {
-        "date": formData.date + "T" + formData.time + ":00.000" + TIMEZONE,
-        "customer": {"id": formData.appointmentOwner},
-        "notes": formData.notes
-    };
+    form.validate({
+        rules: {
+            appointmentDate: {
+                required: true,
+                date: true
+            }
+        }
+    });
 
-    body = JSON.stringify(body);
-    console.log(body);
+    if (form.valid()) {
 
-    if(id == null) {
-        submitData(body, appointmentURL);
-        console.log("null");
+        var formData = form.serializeObject();
+
+        var body = {
+            "date": formData.date + "T" + formData.time + ":00.000" + TIMEZONE,
+            "customer": {"id": formData.appointmentOwner},
+            "notes": formData.notes
+        };
+
+        body = JSON.stringify(body);
+        console.log(body);
+
+        if (id == null) {
+            submitData(body, appointmentURL);
+            console.log("null");
+        } else {
+            updateData(body, appointmentURL, id);
+            console.log("UpdateData: " + body + " - " + appointmentURL + id);
+        }
     } else {
-        updateData(body, appointmentURL, id);
-        console.log("UpdateData: " + body + " - " + appointmentURL + id);
+        showAlert(statusCodeInvalidForm);
     }
 }
 
@@ -126,17 +163,17 @@ function truncateToTime(date) {
 function activateEditModal(dataType, id) {
 
     console.log("Editing " + dataType + " " + id);
-    
+
     var modal;
-    
+
     if (dataType == "customer") {
-        
+
         modal = $("#newCustomerModal");
-        
+
         var currentCustomer = getData(customerURL + id);
 
         var currentAddress = extractAddress(currentCustomer.address);
-        
+
         modal.find("[name='firstName']").attr("value", currentCustomer.firstName);
         modal.find("[name='lastName']").attr("value", currentCustomer.lastName);
         modal.find("[name='email']").attr("value", currentCustomer.email);
@@ -145,7 +182,7 @@ function activateEditModal(dataType, id) {
         modal.find("[name='city']").attr("value", currentAddress[2]);
 
         modal.find("#submitCustomerButton").attr("onclick", "submitCustomer(" + currentCustomer.id + ")");
-        
+
     } else if (dataType == "car") {
         modal = $("#newCarModal");
 
@@ -260,7 +297,7 @@ function buildAppointmentInspectionModal(modal, appointment) {
 
 function showInspectionModal(dataType, id) {
     var modal = $('#inspectionModal');
-    
+
     var dataObject;
 
     if (dataType == "customer") {
@@ -343,16 +380,18 @@ function resetForms() {
 }
 
 
-
 function showAlert(statusCode) {
 
     var alert = $('.modal-footer .alert');
 
     alert.removeClass('alert-success');
     alert.removeClass('alert-danger');
+    alert.removeClass('alert-warning');
 
     if (statusCode === statusCodeOK) {
         alert.html("Success!").addClass('alert-success').fadeIn();
+    } else if (statusCode === statusCodeInvalidForm) {
+        alert.html("Please fill in all required fields.").addClass('alert-warning').fadeIn();
     } else {
         alert.html("Error! Code: " + statusCode).addClass('alert-danger').fadeIn();
     }

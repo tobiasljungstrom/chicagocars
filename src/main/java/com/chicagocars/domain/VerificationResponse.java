@@ -1,14 +1,10 @@
 package com.chicagocars.domain;
 
-public class Verification {
+public class VerificationResponse {
 
     private long userId;
 
-    public Verification(int userId) {
-        this.userId = userId;
-    }
-
-    public Verification() {
+    public VerificationResponse() {
     }
 
     public long getUserId() {
@@ -21,7 +17,7 @@ public class Verification {
 
     @Override
     public String toString() {
-        return "Verification{" +
+        return "VerificationResponse{" +
                 "userId=" + userId +
                 '}';
     }

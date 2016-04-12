@@ -16,17 +16,17 @@ public class Customer implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}) //Creates an address when a Customer is created
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE) //Removes all cars owned by customer when they are removed

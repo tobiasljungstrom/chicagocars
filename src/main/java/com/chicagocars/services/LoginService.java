@@ -1,7 +1,7 @@
 package com.chicagocars.services;
 
 import com.chicagocars.domain.Customer;
-import com.chicagocars.domain.Verification;
+import com.chicagocars.domain.VerificationResponse;
 import com.chicagocars.domain.VerificationRequest;
 import com.chicagocars.respositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class LoginService {
 
     public void verify(VerificationRequest verificationRequest) {
 
-        Verification verificationResult = new Verification();
+        VerificationResponse verificationResponseResult = new VerificationResponse();
         session = getSessionObject();
 
         String currentPassword = verificationRequest.getPassword();
@@ -34,13 +34,13 @@ public class LoginService {
         System.out.println("Recieved: " + currentUsername + " + " + currentPassword);
 
         if (currentUsername.equals(ADMIN_NAME) && currentPassword.equals(ADMIN_PASSWORD)) {
-            verificationResult.setUserId(-1);
+            verificationResponseResult.setUserId(-1);
         } else {
             long userId = findUserId(currentUsername);
-            verificationResult.setUserId(userId);
+            verificationResponseResult.setUserId(userId);
         }
 
-        session.setAttribute("user", verificationResult);
+        session.setAttribute("user", verificationResponseResult);
         System.out.println("Set user to: " + session.getAttribute("user").toString());
     }
 
@@ -63,9 +63,9 @@ public class LoginService {
         return attributes.getRequest().getSession(true);
     }
 
-    public Verification getCurrentUser() {
+    public VerificationResponse getCurrentUser() {
 
         System.out.println("Returning: " + session.getAttribute("user").toString());
-        return (Verification) session.getAttribute("user");
+        return (VerificationResponse) session.getAttribute("user");
     }
 }
