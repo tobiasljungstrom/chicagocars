@@ -8,7 +8,9 @@ function submitData(body, url) {
         success: function () {
             showAlert(statusCodeOK);
             refreshTables();
+            refreshCustomerLists();
             resetForms();
+            refreshCustomerLists();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showAlert(jqXHR.status);
@@ -78,6 +80,7 @@ function doDelete(dataType, id) {
             showAlert(statusCodeOK);
             refreshTables();
             resetForms();
+            refreshCustomerLists();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             showAlert(jqXHR.status);

@@ -21,7 +21,7 @@ $('document').ready(function () {
     clearAllActivePages();
     hideAllAlerts();
     resetForms();
-    populateCustomerLists();
+    refreshCustomerLists();
     activateCustomerPage();
 
     $("#newcustomerform").on("submit", function (e) {
@@ -356,14 +356,17 @@ function makeTableRowsHoverable() {
         });
 }
 
-function populateCustomerLists() {
+function refreshCustomerLists() {
     var allCustomers = getData(customerURL + "all");
+
+    $("#carOptionBody").html("");
+    $("#appointmentOptionBody").html("");
 
     for (i = 0; i < allCustomers.length; i++) {
         var currentId = allCustomers[i].id;
         var currentName = allCustomers[i].firstName + " " + allCustomers[i].lastName;
 
-        $('#carOwnerSelector').append("<option value='" + currentId + "'>[" + currentId + "] " + currentName + "</option>");
+        $('#carOwnerSelector #carOptionBody').append("<option value='" + currentId + "'>[" + currentId + "] " + currentName + "</option>");
         $('#appointmentOwnerSelector').append("<option value='" + currentId + "'>[" + currentId + "] " + currentName + "</option>");
     }
 }

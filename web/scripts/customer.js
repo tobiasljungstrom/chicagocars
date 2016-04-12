@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     for (var i = 0; i < appointments.length; i++) {
         $(".appointmentList ul").append(
-            "<li>" + appointments[i].substr(3, 16) + "</li>"
+            "<li>" + appointments[i].substr(0, 16) + "</li>"
         );
     }
 
